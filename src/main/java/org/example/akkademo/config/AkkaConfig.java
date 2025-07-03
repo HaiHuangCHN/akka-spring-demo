@@ -1,28 +1,18 @@
 package org.example.akkademo.config;
 
-import akka.actor.ActorSystem;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import akka.actor.typed.ActorSystem;
+import akka.actor.typed.javadsl.Behaviors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AkkaConfig {
 
-
-    private final ApplicationContext applicationContext;
-
-    @Autowired
-    public AkkaConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
     @Bean
-    public ActorSystem createSystem() {
-        ActorSystem system = ActorSystem.create("akka-spring-demo");
-        SpringExtension.SPRING_EXTENSION_PROVIDER.get(system).initialize(applicationContext);
+    public ActorSystem<Void> actorSystem() {
+        // 创建根Actor，不处理任何消息（仅作为系统入口）
+        ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "spring-akka-system");
         return system;
     }
-
 
 }
