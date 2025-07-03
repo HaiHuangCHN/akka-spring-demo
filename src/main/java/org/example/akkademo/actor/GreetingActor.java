@@ -10,9 +10,11 @@ import akka.actor.typed.javadsl.Receive;
 // Actor消息协议
 public class GreetingActor {
 
-    // 消息类型
+    // Greet 消息：用于请求问候
     public static final class Greet {
+        // 要问候的名字
         public final String name;
+        // 回复目标 Actor
         public final ActorRef<Greeted> replyTo;
 
         public Greet(String name, ActorRef<Greeted> replyTo) {
@@ -22,7 +24,9 @@ public class GreetingActor {
 
     }
 
+    // Greeted 消息：用于回复问候请求
     public static final class Greeted {
+        // 问候消息
         public final String message;
         public final ActorRef<Greet> from;
 
@@ -33,7 +37,9 @@ public class GreetingActor {
     }
 
     // Actor行为实现
+    // 创建 Actor 行为的工厂方法
     public static Behavior<Greet> create() {
+        // Behaviors.setup 用于创建 Actor 的初始状态
         return Behaviors.setup(GreetingActorBehavior::new);
     }
 
@@ -46,6 +52,7 @@ public class GreetingActor {
             this.context = context;
         }
 
+        // 定义如何处理接收到的消息
         @Override
         public Receive<Greet> createReceive() {
             return newReceiveBuilder()
@@ -54,8 +61,11 @@ public class GreetingActor {
         }
 
         private Behavior<Greet> onGreet(Greet command) {
+            // 记录接收到的消息
             context.getLog().info("Hello {}!", command.name);
+            // 向发送者回复 Greeted 消息
             command.replyTo.tell(new Greeted("Hello " + command.name, getContext().getSelf()));
+            // 返回 this 表示保持当前行为不变
             return this;
         }
     }
