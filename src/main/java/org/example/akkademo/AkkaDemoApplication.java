@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <p>
  * Baeldung：
  * https://www.baeldung.com/akka-with-spring
+ * https://www.baeldung.com/akka-actors-java#1-actor-configuration
+ * https://www.baeldung.com/tag/akka
  */
 @SpringBootApplication
 public class AkkaDemoApplication {

@@ -42,6 +42,8 @@ public class GreetingActor extends UntypedAbstractActor {
 
     }
 
+    // https://www.baeldung.com/akka-actors-java#1-actor-configuration
+    // It’s highly recommended and considered a best-practice to define the factory methods inside the actor object that will handle the creation of the Props object.
     public static Props props(String text) {
         return Props.create(GreetingActor.class, text);
     }
