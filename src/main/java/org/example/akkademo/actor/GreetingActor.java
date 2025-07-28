@@ -59,7 +59,6 @@ public class GreetingActor {
         public Receive<IActorMessage> createReceive() {
             return newReceiveBuilder()
                     .onMessage(Greet.class, this::onGreet)
-                    .onMessage(Greeted.class, this::onGreeted)
                     .build();
         }
 
@@ -68,13 +67,6 @@ public class GreetingActor {
             context.getLog().info("Hello! I'm {}", command.name);
             // 向发送者回复 Greeted 消息
             command.replyTo.tell(new Greeted("Hi, I'm Admin!", context.getSelf().unsafeUpcast()));
-            // 返回 this 表示保持当前行为不变
-            return this;
-        }
-
-        private Behavior<IActorMessage> onGreeted(Greeted command) {
-            // 记录接收到的消息
-            context.getLog().info("Hello {}!", command.message);
             // 返回 this 表示保持当前行为不变
             return this;
         }
