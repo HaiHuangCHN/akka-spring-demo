@@ -6,6 +6,7 @@ import akka.actor.typed.Props;
 import akka.actor.typed.javadsl.AskPattern;
 import lombok.extern.slf4j.Slf4j;
 import org.example.akkademo.actor.GreetingActor;
+import org.example.akkademo.actor.IActorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.concurrent.CompletionStage;
 public class GreetingService {
 
     private final ActorSystem<Void> actorSystem;
-    private final ActorRef<GreetingActor.Greet> greetingActor;
+    private final ActorRef<IActorMessage> greetingActor;
 
     @Autowired
     public GreetingService(ActorSystem<Void> actorSystem) {
