@@ -64,7 +64,7 @@ public class GreetingActor {
             // 记录接收到的消息
             context.getLog().info("Hello {}!", command.name);
             // 向发送者回复 Greeted 消息
-            command.replyTo.tell(new Greeted("Hi " + command.name, getContext().getSelf()));
+            command.replyTo.tell(new Greeted("Hi!", getContext().getSelf()));
             // 返回 this 表示保持当前行为不变
             return this;
         }
