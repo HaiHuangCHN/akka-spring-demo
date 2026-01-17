@@ -5,6 +5,8 @@ import akka.actor.typed.ActorSystem;
 import akka.actor.typed.Props;
 import akka.actor.typed.javadsl.AskPattern;
 import lombok.extern.slf4j.Slf4j;
+import org.example.akkademo.actor.Greet;
+import org.example.akkademo.actor.Greeted;
 import org.example.akkademo.actor.GreetingActor;
 import org.example.akkademo.actor.IActorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,8 @@ public class GreetingService {
     public CompletionStage<String> greet(String name) {
         return AskPattern.ask(
                 greetingActor,
-                (ActorRef<GreetingActor.Greeted> replyTo) ->
-                        new GreetingActor.Greet(name, replyTo),
+                (ActorRef<Greeted> replyTo) ->
+                        new Greet(name, replyTo),
                 Duration.ofSeconds(3),
                 actorSystem.scheduler()
         ).thenApply(response -> {
