@@ -33,9 +33,13 @@ public class GreetingActor extends AbstractBehavior<IActorMessage> {
 
     private Behavior<IActorMessage> onGreet(Greet command) {
         // 记录接收到的消息
-        super.getContext().getLog().info("Hello! I'm {}", command.name);
+        getContext().getLog().info("Hello! I'm {}", command.name);
         // 向发送者回复 Greeted 消息
-        command.replyTo.tell(new Greeted("Hi, I'm Admin!", super.getContext().getSelf().unsafeUpcast()));
+        try {
+            command.replyTo.tell(new Greeted("Hi, I'm Admin!", getContext().getSelf()));
+        } catch (Exception e) {
+            getContext().getLog().error("Failed to send reply", e);
+        }
         // 返回 this 表示保持当前行为不变
         return this;
     }

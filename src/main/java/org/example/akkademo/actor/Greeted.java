@@ -7,9 +7,9 @@ public final class Greeted implements IActorMessage {
     // 问候消息
     public final String message;
     // 从哪个 Actor 来的
-    public final ActorRef<Greet> from;
+    public final ActorRef<IActorMessage> from;
 
-    public Greeted(String message, ActorRef<Greet> from) {
+    public Greeted(String message, ActorRef<IActorMessage> from) {
         this.message = message;
         this.from = from;
     }
