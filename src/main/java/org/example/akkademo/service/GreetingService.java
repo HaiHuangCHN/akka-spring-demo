@@ -33,13 +33,17 @@ public class GreetingService {
     public CompletionStage<String> greet(String name) {
         return AskPattern.ask(
                 greetingActor,
-                (ActorRef<Greeted> replyTo) ->
+                (ActorRef<IActorMessage> replyTo) ->
                         new Greet(name, replyTo),
                 Duration.ofSeconds(3),
                 actorSystem.scheduler()
         ).thenApply(response -> {
-            log.info("Received response: {}", response.message);
-            return response.message;
+            if (response instanceof Greeted greeted) {
+                log.info("Received response: {}", greeted.message);
+                return greeted.message;
+            }
+
+            return response.toString();
         }).exceptionally(ex -> {
             log.error("Failed to get response", ex);
             return "Error: " + ex.getMessage();

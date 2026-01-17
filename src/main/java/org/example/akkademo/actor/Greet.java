@@ -7,12 +7,11 @@ public class Greet implements IActorMessage {
     // 要问候的名字
     public final String name;
     // 需要回复的目标 Actor
-    public final ActorRef<Greeted> replyTo;
+    public final ActorRef<IActorMessage> replyTo;
 
-    public Greet(String name, ActorRef<Greeted> replyTo) {
+    public Greet(String name, ActorRef<IActorMessage> replyTo) {
         this.name = name;
         this.replyTo = replyTo;
     }
-
 }
 
