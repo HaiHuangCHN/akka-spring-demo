@@ -6,7 +6,7 @@ import akka.actor.typed.ActorRef;
 public class Greet implements IActorMessage {
     // 要问候的名字
     public final String name;
-    // 需要回复的目标 Actor
+    // 回复的目标 Actor
     public final ActorRef<IActorMessage> replyTo;
 
     public Greet(String name, ActorRef<IActorMessage> replyTo) {
